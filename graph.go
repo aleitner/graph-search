@@ -5,26 +5,31 @@ import (
 	"sync"
 )
 
+// Graph of nodes and edges
 type UndirectedGraph struct {
 	nodes []*Node
 	edges map[Node][]*Node
 	mtx sync.RWMutex
 }
 
+// Node in the graph
 type Node struct {
 	data byte
 }
 
+// NewUndirectedGraph creates a new graph with no direction
 func NewUndirectedGraph() *UndirectedGraph {
 	return &UndirectedGraph{
 		edges: make(map[Node][]*Node),
 	}
 }
 
+// String prints the node data
 func (n *Node) String() string {
 	return fmt.Sprintf("%v", n.data)
 }
 
+// AddNode to the Graph
 func (g* UndirectedGraph) AddNode(n *Node) {
 	g.mtx.Lock()
 	defer g.mtx.Unlock()
@@ -34,6 +39,7 @@ func (g* UndirectedGraph) AddNode(n *Node) {
 	g.nodes = append(g.nodes, n)
 }
 
+// AddEdge between two nodes
 func (g *UndirectedGraph) AddEdge(n1, n2 *Node) {
 	g.mtx.Lock()
 	defer g.mtx.Unlock()
@@ -44,6 +50,7 @@ func (g *UndirectedGraph) AddEdge(n1, n2 *Node) {
 	g.edges[*n2] = append(g.edges[*n2], n1)
 }
 
+// Print the graph
 func (g *UndirectedGraph) Print() {
 	g.mtx.RLock()
 	defer g.mtx.RUnlock()
