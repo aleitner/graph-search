@@ -12,21 +12,11 @@ type UndirectedGraph struct {
 	mtx sync.RWMutex
 }
 
-// Node in the graph
-type Node struct {
-	data byte
-}
-
 // NewUndirectedGraph creates a new graph with no direction
 func NewUndirectedGraph() *UndirectedGraph {
 	return &UndirectedGraph{
 		edges: make(map[Node][]*Node),
 	}
-}
-
-// String prints the node data
-func (n *Node) String() string {
-	return fmt.Sprintf("%v", n.data)
 }
 
 // AddNode to the Graph
