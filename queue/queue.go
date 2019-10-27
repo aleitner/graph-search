@@ -1,29 +1,32 @@
-package bfs_dfs
+package queue
 
-import "sync"
+import (
+	"bfs-dfs/node"
+	"sync"
+)
 
 // Queue of Nodes used for Breadth first Search
 type Queue struct {
-	nodes []Node
+	nodes []node.Node
 	mtx sync.RWMutex
 }
 
 // Create a New Queue
-func NewQueue() *Queue {
+func New() *Queue {
 	return &Queue{
-		nodes: []Node{},
+		nodes: []node.Node{},
 	}
 }
 
-// Enqueue a node
-func (q *Queue) Enqueue(t Node) {
+// Add a node to the queue
+func (q *Queue) Add(t node.Node) {
 	q.mtx.Lock()
 	defer q.mtx.Unlock()
 	q.nodes = append(q.nodes, t)
 }
 
-// Dequeue the node that is next in queue
-func (q *Queue) Dequeue() *Node {
+// Take the node that is next in queue
+func (q *Queue) Take() *node.Node {
 	q.mtx.Lock()
 	defer q.mtx.Unlock()
 	if len(q.nodes) == 0 {
@@ -37,7 +40,7 @@ func (q *Queue) Dequeue() *Node {
 }
 
 // Front checks the node that is at the front of the queue
-func (q *Queue) Front() *Node {
+func (q *Queue) Front() *node.Node {
 	q.mtx.RLock()
 	defer q.mtx.RUnlock()
 

@@ -1,4 +1,4 @@
-package bfs_dfs
+package node
 
 import "fmt"
 
